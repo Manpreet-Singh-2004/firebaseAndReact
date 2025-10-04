@@ -1,3 +1,6 @@
 my-app/src/config/firebase.js
 my-app/src/firebase-explained.md
 my-app/firebase-debug.log
+.github/workflows/firebase-hosting-merge.yml
+.github/workflows/firebase-hosting-pull-request.yml
+my-app/.firebase/hosting.YnVpbGQ.cache
