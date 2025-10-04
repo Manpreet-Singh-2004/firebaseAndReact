@@ -8,7 +8,8 @@ export const Auth = () => {
     const [password, setPassword] = useState("");
     const [error, SetError] = useState("");
 
-    console.log(auth?.currentUser?.email) // Used to console log the current user
+    // console.log(auth?.currentUser?.email) // Used to console log the current user
+    // console.log(auth?.currentUser?.photoURL) // Used to console log the current user
 
     const signIn = async() =>{
         try{
@@ -28,13 +29,16 @@ export const Auth = () => {
         }catch(e){
             console.log(e)
             SetError(e.message)
+                console.log(auth?.currentUser?.email) // Used to console log the current user
+                console.log(auth?.currentUser?.photoURL) // Used to console log the current user
         }
     }
 
     const logout = async() =>{
         try{
+            const signedOutUser = auth?.currentUser?.email
             await signOut(auth)
-            console.log("User Logged out Successfully")
+            console.log(`${signedOutUser} User Logged out Successfully`)
         }catch(e){
             console.log(e)
             SetError(e.message)
@@ -60,5 +64,24 @@ export const Auth = () => {
 
         {error && <h2 style={{ color: "red" }}>{error}</h2>}
 
+        <h1>Welcome {auth?.currentUser?.email}</h1>
+
     </div>
 )}
+
+
+// Rules for firestore database | Anyone can delete anything
+/*
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      
+      allow read: if true;
+
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+      allow update, delete: if request.auth != null;
+    }
+  }
+}
+*/
